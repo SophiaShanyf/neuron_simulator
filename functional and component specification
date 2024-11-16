@@ -2,7 +2,8 @@ Functional specification
 This tool will be a model visualization tool. 
 
 1.	Background. 
-The majority of neural simulation tools require a high level of familiarity with coding tools like python. However, for some neuroscientists, programming is not a primary tool in their day-to-day work. Thus, in this project, I will design a non-coder user friendly interface for neural stimulation and a spiking simulator for this group of scientists. 
+The majority of neural simulation tools require a high level of familiarity with coding tools like python. However, for some neuroscientists, programming is not a primary tool in their day-to-day work. Thus, in this project, I will design a non-coder user friendly interface for neural stimulation and a spiking simulator 
+for this group of scientists. 
 2.	User profile. 
 The users will be neuroscientists who want to do neural simulation but do not have previous coding or python experience. The requirement of using this tool is to open a webpage. 
 3.	Use cases. 
@@ -13,10 +14,12 @@ Component specification
 
 The sections in the component specification are:
 1.	Software components.
-There will be three components that constitute this software. There is already a python package that does the single neuron simulation. However, in order to take advantage of it, the user has to know how to a). Download python and download packages and b). Code in python. Thus, the second part of this software will be a wrapper that makes the website and non-coder user friendly interface. The website will include several boxes where user can input properties for neurons and stimulations. The third part of it is a plotter that plots the neural spikes, which is the information that the user will get out of using this package.  
+There will be three components that constitute this software. There is already a python package that does the single neuron simulation. However, in order to take advantage of it, the user has to know how to a). Download python and download packages and b). Code in python. Thus, the second part of this software will be a
+wrapper that makes the website and non-coder user friendly interface. The website will include several boxes where user can input properties for neurons and stimulations. The third part of it is a plotter that plots the neural spikes, which is the information that the user will get out of using this package.  
 
 2.	Interactions to accomplish use cases.
-The wrapper will create the website and gather the inputted properties in various forms that define neuron membrane properties, ion channels on the membrane, cell type, stimulation amplitude, stimulation timing, etc. The pre-existing neuron package will take this information and run the simulation to calculate the neural activity. The resulting neural activity will be in a pandas dataframe and output to the plotter. The plotter will take the simulated neural activity and plot it on the website so that the user can see the result of their input on the website. 
+The wrapper will create the website and gather the inputted properties in various forms that define neuron membrane properties, ion channels on the membrane, cell type, stimulation amplitude, stimulation timing, etc. The pre-existing neuron package will take this information and run the simulation to calculate the neural
+activity. The resulting neural activity will be in a pandas dataframe and output to the plotter. The plotter will take the simulated neural activity and plot it on the website so that the user can see the result of their input on the website. 
 
 3.	Preliminary plan.
 I am aiming to have a website with basic functionalities like text box input and plotter ready by the end of next week. For the week of 18th, I will figure out how to connect the website and plotter with the neuron python package. 
