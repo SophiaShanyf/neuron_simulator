@@ -6,6 +6,6 @@ setup(
    description='a visualization tool for neuron spiking graph',
    author='Sophia Shan',
    author_email='shanyufei2001@gmail.com',
-   packages=['neuron', 'pysimplegui'],  #same as name
+   packages=['neuron', 'pygame-ce', 'pygame_gui'],  #same as name
    # install_requires=['wheel', 'bar', 'greek'], #external packages as dependencies
 )
