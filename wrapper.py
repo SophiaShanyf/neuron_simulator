@@ -1,36 +1,50 @@
 # pip install -r requirements.txt
-import neuron 
-import pygame_ce
+from neuron import h, rxd
+import pygame
 import pygame_gui
+
 
 
 pygame.init()
 
-pygame.display.set_caption('Quick Start')
-window_surface = pygame.display.set_mode((800, 600))
+WIDTH, HEIGHT = 800, 500
 
-background = pygame.Surface((800, 600))
-background.fill(pygame.Color('#000000'))
+SCREEN  = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Neuron Simulator")
 
-manager = pygame_gui.UIManager((800, 600))
-clock = pygame.time.Clock()
-hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
-                                             text='Say Hello',
-                                             manager=manager)
+CLOCK = pygame.time.Clock()
+MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT))
+
+
+Axon_length_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((50, 50), (100, 25)),
+                                                manager=MANAGER, object_id = "#axon_length_input")
+
+
+
 
 is_running = True
 
+# create a neuron object 
+soma = soma = h.Section(name = 'soma')
+
 while is_running:
-    time_delta = clock.tick(60)/1000.0
+    UI_REFRESH_RATE = CLOCK.tick(60)/1000.0
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#axon_length_input":
+            soma.L = int(event.text)
+            # insert a input type check here 
 
-        manager.process_events(event)
-    manager.update(time_delta)
+        MANAGER.process_events(event)
+    SCREEN.fill("White")
+    MANAGER.update(UI_REFRESH_RATE)
 
 
-    window_surface.blit(background, (0, 0))
-    manager.draw_ui(window_surface)
+    
+    MANAGER.draw_ui(SCREEN)
 
     pygame.display.update()
+
+
