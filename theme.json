@@ -1,0 +1,109 @@
+{
+    "button":
+    {
+        "misc":
+        {
+            "border_width": "1",
+            "shadow_width": "2"
+        }
+   },
+
+
+
+   "text_box":
+   {
+       "colours":
+       {
+            "normal_text": "#000000",
+            "dark_bg":"#FFFFFF",
+            "normal_border": "#FFFFFF",
+            "link_text": "#FF0000",
+            "link_hover": "#FFFF00",
+            "link_selected": "#FFFFFF"
+       },
+
+       "misc":
+       {
+            "shape": "rounded_rectangle",
+            "shadow_width": "0",
+            "border_width": "1",
+            "padding": "1,1",
+            "link_normal_underline": "0",
+            "link_hover_underline": "1",
+            "line_spacing": "1.0"
+       }
+   }, 
+
+
+
+
+   "text_entry_line":
+   {
+    "colours":
+    {
+         "normal_text": "#FFFFFF",
+         "dark_bg":"#21282D",
+         "normal_border": "#FFFFFF",
+         "link_text": "#FF0000",
+         "link_hover": "#FFFF00",
+         "link_selected": "#FFFFFF"
+    },
+
+    "misc":
+    {
+         "shape": "rounded_rectangle",
+         "bold": "1",
+         "shadow_width": "0",
+         "border_width": "1",
+         "padding": "1,1",
+         "link_normal_underline": "0",
+         "link_hover_underline": "1",
+         "line_spacing": "1.0"
+   }
+},
+    "label":
+    {
+        "colours":
+        {
+             "dark_bg": "#000000",
+             "normal_text": "#FFFFFF",
+             "text_shadow": "#505050"
+        },
+        "font":
+        {
+             "size": "25",
+             "bold": "1",
+             "italic": "0"
+        },
+        "misc":
+        {
+             "text_shadow": "0"
+        }
+    }, 
+
+
+
+
+    "selection_list":
+    {
+        "colours":
+        {
+            "dark_bg":"#21282D",
+            "normal_border": "#999999"
+        },
+        "misc":
+        {
+            "shape": "rounded_rectangle",
+            "border_width": "1",
+            "shadow_width": "1",
+            "list_item_height": "20"
+        }
+    },
+    "selection_list.@selection_list_item":
+    {
+        "misc":
+        {
+           "border_width": "2"
+        }
+    }
+}
