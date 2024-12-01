@@ -6,8 +6,6 @@ import pygame_gui
 import pygame_chart as pyc
 
 
-
-
 pygame.init()
 
 
