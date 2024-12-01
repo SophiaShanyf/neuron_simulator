@@ -19,8 +19,6 @@ pygame.display.set_caption("Neuron Simulator")
 CLOCK = pygame.time.Clock()
 MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT), 'theme.json')
 
-display_stim = False
-
 # Upper text displace and text input section 
 
 
@@ -31,16 +29,13 @@ TEXT_POS_HEIGHT = 60
 NEURON_IMG = pygame.image.load("neuron_img.jpg").convert()
 NEURON_IMG = pygame.transform.rotozoom(NEURON_IMG, 0, 0.7)
 NEURON_RECT = NEURON_IMG.get_rect()
-NEURON_RECT.center = 200, 480
+NEURON_RECT.center = 200, 500
 
 
-STIM_IMG = pygame.image.load("stim_img.jpg").convert()
-STIM_IMG = pygame.transform.rotozoom(STIM_IMG, 0, 0.15)
-STIM_RECT = STIM_IMG.get_rect()
-STIM_RECT.center = 280, 450
+tips = "User tips: 1. Hit 'Enter' to input values; 2. Ion channel cannot be unselected. Please restart to try new values! "
 
-
-
+user_tips =  pygame_gui.elements.UILabel(text = tips, relative_rect=pygame.Rect((300, 25), (550, 35)),
+                                               manager = MANAGER,object_id = "#tips")
 
 Section_title  = pygame_gui.elements.UILabel(text = "Neuron Properties", relative_rect=pygame.Rect((30, 25), (255, 35)),
                                                manager = MANAGER, anchors={'left': 'left', 'top':'top'})
@@ -72,26 +67,18 @@ M_capacity_title = pygame_gui.elements.UITextBox(html_text = "Membrane Capacity(
 M_capacity_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((625, 90), (TEXT_BOX_WIDTH, 30)),
                                                 manager=MANAGER, object_id = "#membrane_c_input")
 
-# resting membrane potential 
-Resting_m_title_1 = pygame_gui.elements.UITextBox(html_text = "Resting Membrane ", relative_rect=pygame.Rect((30, 135), (TEXT_BOX_WIDTH + 300, 28)),
-                                               manager = MANAGER,  object_id = "#resting_m")
-Resting_m_title_2 = pygame_gui.elements.UITextBox(html_text = "Potenital(mV)): ", relative_rect=pygame.Rect((30, 155), (TEXT_BOX_WIDTH + 300, 28)),
-                                               manager = MANAGER,  object_id = "#resting_m")
-Resting_minput = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((30, 180), (TEXT_BOX_WIDTH, 30)),
-                                                manager=MANAGER, object_id = "#resting_m_input")
-
 
 # Ion Channels 
-Ion_chan_title = pygame_gui.elements.UITextBox(html_text = "Ion Channels: ", relative_rect=pygame.Rect((215, 135), (TEXT_BOX_WIDTH, 30)),
+Ion_chan_title = pygame_gui.elements.UITextBox(html_text = "Ion Channels: ", relative_rect=pygame.Rect((30, 135), (TEXT_BOX_WIDTH, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
-Ion_leaky_chan = pygame_gui.elements.UITextBox(html_text = "Passive Leaky Channel: ", relative_rect=pygame.Rect((215, 170), (TEXT_BOX_WIDTH + 100, 30)),
+Ion_leaky_chan = pygame_gui.elements.UITextBox(html_text = "Passive Leaky Channel: ", relative_rect=pygame.Rect((30, 170), (TEXT_BOX_WIDTH + 100, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
-Ion_HH_chan = pygame_gui.elements.UITextBox(html_text = "Hodgkin-Huxley Na&#8314;, K&#8314; Channel: ", relative_rect=pygame.Rect((500, 170), (TEXT_BOX_WIDTH+ 300, 30)),
+Ion_HH_chan = pygame_gui.elements.UITextBox(html_text = "Hodgkin-Huxley Na&#8314;, K&#8314; Channel: ", relative_rect=pygame.Rect((350, 170), (TEXT_BOX_WIDTH+ 300, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
 
-Ion_leaky_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((380, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
+Ion_leaky_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((200, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
                                                 manager=MANAGER, object_id = "#leaky_input")
-Ion_HH_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((730, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
+Ion_HH_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((580, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
                                                 manager=MANAGER, object_id = "#HH_input")
 
 
@@ -145,17 +132,12 @@ soma = h.Section(name = 'soma')
 draw = False
 
 
+
 # create a canvas for drawing
-Figure = pyc.Figure(SCREEN, 520, 350, 300, 300)
+Figure = pyc.Figure(SCREEN, 520, 370, 300, 300)
 
 while is_running:
     UI_REFRESH_RATE = CLOCK.tick(60)/100.0
-
-     
-    # pygame.display.update()
-
-
-
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -198,19 +180,20 @@ while is_running:
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#stim_amp_input":
             iclamp.amp = float(event.text)
 
-        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#resting_m_input":
-            t = h.Vector().record(h._ref_t)
-            v = h.Vector().record(soma(0.5)._ref_v)
-            h.finitialize(float(event.text)) * mV
-            # insert a input type check here 
+        
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_object_id == "#Recordbutton":
                 draw = True
+                
+                t = h.Vector().record(h._ref_t)
+                v = h.Vector().record(soma(0.5)._ref_v)
+
+                h.finitialize(-65 * mV)
 
                 h.continuerun(50 * ms)
             if event.ui_object_id == "#Restartbutton":
-                pass
+                is_running = False
                 
             
 
@@ -243,19 +226,6 @@ while is_running:
     SCREEN.blit(NEURON_IMG, NEURON_RECT)
     # print(pygame.time.get_ticks())
     # print(display_stim)
-    if display_stim:  
-        STIM_RECT.x = 230
-        STIM_RECT.y = 400
-        # print(STIM_RECT)
-    else:
-        
-        STIM_RECT.x = -80
-        STIM_RECT.y = -80
-        
-        #print(STIM_RECT)
-        # STIM_RECT.move_ip(20, 20)
-    
-    SCREEN.blit(STIM_IMG, STIM_RECT)
         # pygame.display.update()
     MANAGER.update(UI_REFRESH_RATE)
     

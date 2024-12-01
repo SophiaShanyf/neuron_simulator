@@ -1,4 +1,20 @@
 {
+    "#tips":
+    {
+        "colours":
+        {
+            "dark_bg": "#FFFFFF",
+             "normal_text":"#000000", 
+             "text_shadow": "#505050"
+        },
+        "font":
+        {
+            "size": "11",
+            "bold": "0",
+            "italic": "1"
+        }
+       
+   },
     "#Recordbutton":
     {
         "colours":
