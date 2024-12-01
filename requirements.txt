@@ -1,3 +1,4 @@
 neuron==8.2.6
 pygame_ce==2.5.2
 pygame_gui==0.6.10
+pygame_chart==1.0.0

@@ -1,6 +1,18 @@
 {
-    "button":
+    "#Recordbutton":
     {
+        "colours":
+        {
+            "normal_bg":  "#FF0000",
+            "normal_text": "#FFFFFF",
+            "hovered_bg": "#35393e"
+        },
+        "font":
+        {
+            "size": "18",
+            "bold": "1",
+            "italic": "0"
+        },
         "misc":
         {
             "border_width": "1",
@@ -8,7 +20,26 @@
         }
    },
 
-
+   "#Restartbutton":
+   {
+       "colours":
+       {
+           "normal_bg":  "#FF0000",
+           "normal_text": "#FFFFFF",
+           "hovered_bg": "#35393e"
+       },
+       "font":
+       {
+           "size": "18",
+           "bold": "1",
+           "italic": "0"
+       },
+       "misc":
+       {
+           "border_width": "1",
+           "shadow_width": "2"
+       }
+  },
 
    "text_box":
    {

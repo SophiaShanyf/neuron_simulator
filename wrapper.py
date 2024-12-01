@@ -1,14 +1,17 @@
 # pip install -r requirements.txt
 from neuron import h, rxd
+from neuron.units import ms, mV, μm
 import pygame
 import pygame_gui
+import pygame_chart as pyc
+
 
 
 
 pygame.init()
 
 
-WIDTH, HEIGHT = 850, 600
+WIDTH, HEIGHT = 900, 650
 
 SCREEN  = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Neuron Simulator")
@@ -38,6 +41,7 @@ STIM_RECT.center = 280, 450
 
 
 
+
 Section_title  = pygame_gui.elements.UILabel(text = "Neuron Properties", relative_rect=pygame.Rect((30, 25), (255, 35)),
                                                manager = MANAGER, anchors={'left': 'left', 'top':'top'})
 
@@ -48,67 +52,107 @@ Axon_length_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rec
                                                 manager=MANAGER, object_id = "#axon_length_input")
 
 # Axon diameter
-Axon_diameter_title = pygame_gui.elements.UITextBox(html_text = "Axon Diameter(&#181;m): ", relative_rect=pygame.Rect((205, 65), (TEXT_BOX_WIDTH + 40, 30)),
+Axon_diameter_title = pygame_gui.elements.UITextBox(html_text = "Axon Diameter(&#181;m): ", relative_rect=pygame.Rect((215, 65), (TEXT_BOX_WIDTH + 40, 30)),
                                                manager = MANAGER,  object_id = "#axon_diameter")
-Axon_diameter_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((205, 90), (TEXT_BOX_WIDTH, 30)),
+Axon_diameter_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((215, 90), (TEXT_BOX_WIDTH, 30)),
                                                 manager=MANAGER, object_id = "#axon_diameter_input")
 
 
 # Axon Resistent 
 
-Axon_R_title = pygame_gui.elements.UITextBox(html_text = "Axon Resistance(&ohm;*cm): ", relative_rect=pygame.Rect((395, 65), (TEXT_BOX_WIDTH + 80, 30)),
+Axon_R_title = pygame_gui.elements.UITextBox(html_text = "Axon Resistance(&ohm;*cm): ", relative_rect=pygame.Rect((415, 65), (TEXT_BOX_WIDTH + 80, 30)),
                                                manager = MANAGER,  object_id = "#axon_r")
-Axon_R_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((395, 90), (TEXT_BOX_WIDTH, 30)),
+Axon_R_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((415, 90), (TEXT_BOX_WIDTH, 30)),
                                                 manager=MANAGER, object_id = "#axon_r_input")
 
 
 # Membrane Capacity
-M_capacity_title = pygame_gui.elements.UITextBox(html_text = "Membrane Capacity(&#181;F/cm&sup2;): ", relative_rect=pygame.Rect((595, 65), (TEXT_BOX_WIDTH + 100, 30)),
+M_capacity_title = pygame_gui.elements.UITextBox(html_text = "Membrane Capacity(&#181;F/cm&sup2;): ", relative_rect=pygame.Rect((625, 65), (TEXT_BOX_WIDTH + 100, 30)),
                                                manager = MANAGER,  object_id = "#membrane_c")
-M_capacity_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((595, 90), (TEXT_BOX_WIDTH, 30)),
+M_capacity_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((625, 90), (TEXT_BOX_WIDTH, 30)),
                                                 manager=MANAGER, object_id = "#membrane_c_input")
 
-
+# resting membrane potential 
+Resting_m_title_1 = pygame_gui.elements.UITextBox(html_text = "Resting Membrane ", relative_rect=pygame.Rect((30, 135), (TEXT_BOX_WIDTH + 300, 28)),
+                                               manager = MANAGER,  object_id = "#resting_m")
+Resting_m_title_2 = pygame_gui.elements.UITextBox(html_text = "Potenital(mV)): ", relative_rect=pygame.Rect((30, 155), (TEXT_BOX_WIDTH + 300, 28)),
+                                               manager = MANAGER,  object_id = "#resting_m")
+Resting_minput = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((30, 180), (TEXT_BOX_WIDTH, 30)),
+                                                manager=MANAGER, object_id = "#resting_m_input")
 
 
 # Ion Channels 
-Ion_chan_title = pygame_gui.elements.UITextBox(html_text = "Ion Channels: ", relative_rect=pygame.Rect((30, 125), (TEXT_BOX_WIDTH, 30)),
+Ion_chan_title = pygame_gui.elements.UITextBox(html_text = "Ion Channels: ", relative_rect=pygame.Rect((215, 135), (TEXT_BOX_WIDTH, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
-Ion_leaky_chan = pygame_gui.elements.UITextBox(html_text = "Passive Leaky Channel: ", relative_rect=pygame.Rect((30, 160), (TEXT_BOX_WIDTH + 100, 30)),
+Ion_leaky_chan = pygame_gui.elements.UITextBox(html_text = "Passive Leaky Channel: ", relative_rect=pygame.Rect((215, 170), (TEXT_BOX_WIDTH + 100, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
-Ion_HH_chan = pygame_gui.elements.UITextBox(html_text = "Hodgkin-Huxley Na&#8314;, K&#8314; Channel: ", relative_rect=pygame.Rect((350, 160), (TEXT_BOX_WIDTH+ 300, 30)),
+Ion_HH_chan = pygame_gui.elements.UITextBox(html_text = "Hodgkin-Huxley Na&#8314;, K&#8314; Channel: ", relative_rect=pygame.Rect((500, 170), (TEXT_BOX_WIDTH+ 300, 30)),
                                                manager = MANAGER,  object_id = "#ion_chan")
 
-Ion_leaky_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((100 + TEXT_BOX_WIDTH, 150), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
+Ion_leaky_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((380, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
                                                 manager=MANAGER, object_id = "#leaky_input")
-Ion_HH_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((480 + TEXT_BOX_WIDTH, 150), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
+Ion_HH_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((730, 160), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
                                                 manager=MANAGER, object_id = "#HH_input")
 
 
 
 ## neuron image 
 
-Section_title_2  = pygame_gui.elements.UILabel(text = "Neuron and Stimulation ", relative_rect=pygame.Rect((30, 260), (320, 35)),
+Section_title_2  = pygame_gui.elements.UILabel(text = "Electrical Stimulation ", relative_rect=pygame.Rect((30, 260), (380, 35)),
                                                manager = MANAGER, anchors={'left': 'left', 'top':'top'})
 
-stim = pygame_gui.elements.UITextBox(html_text = "Electrical Stimulation:", relative_rect=pygame.Rect((30, 320), (200, 30)),
-                                               manager = MANAGER,  object_id = "#stim")
-stim_input = pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((200, 310), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
-                                                manager=MANAGER, object_id = "#stim_input")
+
+# location
+Stim_location_title = pygame_gui.elements.UITextBox(html_text = "Location (0-1): ", relative_rect=pygame.Rect((30, 320), (130, 30)),
+                                               manager = MANAGER)
+Stim_location_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((140, 320), (50, 30)),
+                                                manager=MANAGER, object_id = "#stim_loc_input")
+#  delay
+
+Stim_delay_title = pygame_gui.elements.UITextBox(html_text = "Delay (ms): ", relative_rect=pygame.Rect((210, 320), (130, 30)),
+                                               manager = MANAGER)
+Stim_delay_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((310, 320), (50, 30)),
+                                                manager=MANAGER, object_id = "#stim_delay_input")
+# duration
+
+Stim_dur_title = pygame_gui.elements.UITextBox(html_text = "Duration (ms): ", relative_rect=pygame.Rect((30, 350), (130, 30)),
+                                               manager = MANAGER)
+Stim_dur_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((140, 350), (50, 30)),
+                                                manager=MANAGER, object_id = "#stim_dur_input")
+# amplitude
+Stim_amp_title = pygame_gui.elements.UITextBox(html_text = "Amplitude (nA): ", relative_rect=pygame.Rect((210, 350), (130, 30)),
+                                               manager = MANAGER)
+Stim_amp_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((340, 350), (50, 30)),
+                                                manager=MANAGER, object_id = "#stim_amp_input")
+
+
+#stim_input =  pygame_gui.elements.UISelectionList(relative_rect=pygame.Rect((200, 310), (TEXT_BOX_WIDTH, 50)), item_list = ("Yes", "No"), default_selection="No",
+#                                               manager=MANAGER, object_id = "#stim_input")
 ## plot action potential 
 
 
-Section_title_3  = pygame_gui.elements.UILabel(text = "Recorded Potential", relative_rect=pygame.Rect((450, 260), (270, 35)),
-                                               manager = MANAGER, anchors={'left': 'left', 'top':'top'})
+Section_title_3  = pygame_gui.elements.UILabel(text = "Simulation", relative_rect=pygame.Rect((450, 260), (380, 35)),
+                                                manager = MANAGER, anchors={'left': 'left', 'top':'top'})
 
+Record_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((480, 320), (80, 35)), text='Run', manager= MANAGER, object_id = "#Recordbutton")
+Restart_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((640, 320), (150, 35)), text='Restart', manager= MANAGER, object_id = "#Restartbutton")
 
 is_running = True
 
 # create a neuron object 
-soma = soma = h.Section(name = 'soma')
+h.load_file("stdrun.hoc")
+soma = h.Section(name = 'soma')
+draw = False
+
+
+# create a canvas for drawing
+Figure = pyc.Figure(SCREEN, 520, 350, 300, 300)
 
 while is_running:
     UI_REFRESH_RATE = CLOCK.tick(60)/100.0
+
+     
+    # pygame.display.update()
 
 
 
@@ -117,10 +161,11 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#axon_length_input":
-            input_time = pygame.time.get_ticks()
+            # input_time = pygame.time.get_ticks()
             # print(input_time)
           
-            soma.L = float(event.text)
+            soma.L = float(event.text) * μm
+            print(soma.psection)
             '''except:
                 print(pygame.time.get_ticks())
                 v = 1
@@ -132,19 +177,47 @@ while is_running:
                     v = 0
                     '''
 
-
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#axon_diameter_input":
-            soma.diam = float(event.text)
+            soma.diam = float(event.text) * μm
 
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#axon_r_input":
             soma.Ra = float(event.text)
         
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#membrane_c_input":
             soma.cm = float(event.text)
+
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#stim_loc_input":
+            iclamp = h.IClamp(soma(float(event.text)))
+
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#stim_delay_input":
+            iclamp.delay = float(event.text) * ms
+        
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#stim_dur_input":
+            iclamp.dur = float(event.text) * ms
+
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#stim_amp_input":
+            iclamp.amp = float(event.text)
+
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED and event.ui_object_id == "#resting_m_input":
+            t = h.Vector().record(h._ref_t)
+            v = h.Vector().record(soma(0.5)._ref_v)
+            h.finitialize(float(event.text)) * mV
             # insert a input type check here 
 
+        if event.type == pygame_gui.UI_BUTTON_PRESSED:
+            if event.ui_object_id == "#Recordbutton":
+                draw = True
+
+                h.continuerun(50 * ms)
+            if event.ui_object_id == "#Restartbutton":
+                pass
+                
+            
 
         if event.type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
+           
+        
+            '''
             if event.ui_object_id == "#stim_input":
                 if stim_input.get_single_selection() == "Yes":
                     # insert stimulation image 
@@ -153,7 +226,7 @@ while is_running:
                     # start sitmulation in soma
                 if stim_input.get_single_selection() == "No":
                     display_stim = False 
-            
+            '''
             if event.ui_object_id == "#leaky_input":
                 if Ion_leaky_input.get_single_selection() == "Yes":
                     soma = soma.insert("pas")
@@ -176,8 +249,8 @@ while is_running:
         # print(STIM_RECT)
     else:
         
-        STIM_RECT.x = -40
-        STIM_RECT.y = -40
+        STIM_RECT.x = -80
+        STIM_RECT.y = -80
         
         #print(STIM_RECT)
         # STIM_RECT.move_ip(20, 20)
@@ -187,6 +260,11 @@ while is_running:
     MANAGER.update(UI_REFRESH_RATE)
     
     MANAGER.draw_ui(SCREEN)
+    if draw:
+
+        Figure.line('Chart1', list(t),list(v))
+                # draw figure with specified properties
+        Figure.draw()   
 
     pygame.display.update()
 
