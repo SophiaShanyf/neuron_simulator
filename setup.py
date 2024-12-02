@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
    name='neuron_simulator',
@@ -6,6 +6,9 @@ setup(
    description='a visualization tool for neuron spiking graph',
    author='Sophia Shan',
    author_email='shanyufei2001@gmail.com',
-   packages=['neuron', 'pygame-ce', 'pygame_gui', 'pygame_chart'],  #same as name
+   python_requires= '3.11.7',
+   packages= find_packages(['neuron', 'pygame-ce', 'pygame_gui', 'pygame_chart']), 
+   
+     #same as name
    # install_requires=['wheel', 'bar', 'greek'], #external packages as dependencies
 )
