@@ -1,1 +1,5 @@
-import pygame_chart as pyc
+import pygame
+
+
+a = pygame.Surface
+
