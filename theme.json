@@ -13,8 +13,23 @@
             "bold": "0",
             "italic": "1"
         }
-       
-   },
+    },
+
+    "#error_message":
+    {
+        "colours":
+        {
+            "dark_bg": "000000",
+            "normal_text": "#FF0000",
+            "disabled_text": "#000000"
+        },
+        "font":
+        {
+            "size": "15",
+            "bold": "0",
+            "italic": "1"
+        }
+    },
     "#Recordbutton":
     {
         "colours":
