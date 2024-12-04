@@ -1,1 +1,1 @@
-from neuron_simulator import main
+from neuron_simulator import run_simulation
