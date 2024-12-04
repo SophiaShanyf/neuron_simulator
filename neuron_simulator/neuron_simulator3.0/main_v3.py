@@ -4,10 +4,10 @@ from neuron.units import ms, mV, μm
 import pygame
 import pygame_gui
 import pygame_chart as pyc
-import helper_functions as hf
+import neuron_class as Nclass
 import importlib 
 
-importlib.reload(hf)
+importlib.reload(Nclass)
 
 def run_simulation(cell_type):
     # This is the main function for running neuron simulation
@@ -35,7 +35,7 @@ def run_simulation(cell_type):
 
     # create a neuron object 
     if cell_type == "soma":
-        neuron = hf.SOMA()
+        neuron = Nclass.SOMA()
         neuron.make_a_neuron()
         img_file = "soma_img.jpg"
         img_rate = 0.6
@@ -44,20 +44,21 @@ def run_simulation(cell_type):
         Ion_leaky_input, Ion_HH_input, error_m = neuron.setup_gui_page(MANAGER)
 
     elif cell_type == "dend_soma":
-        neuron = hf.DEND_SOMA()
+        neuron = Nclass.DEND_SOMA()
         neuron.make_a_neuron()
         img_file = "dend_soma_img.jpg"
         img_rate = 0.6
         img_center = 250, 500
         [x, y, width, height] = 450, 370, 350, 250
         Ion_leaky_input, Ion_HH_input, error_m, Stim_part = neuron.setup_gui_page(MANAGER)
-
+    '''
         
     elif cell_type == "basic_neuron":
-        neuron = hf.NEURON()
+        neuron = Nclass.NEURON()
         neuron.make_a_neuron()
         img_file = "neuron_img.jpg"
         img_rate = 0.7
+    '''
 
     NEURON_IMG = pygame.image.load(img_file).convert()
     NEURON_IMG = pygame.transform.rotozoom(NEURON_IMG, 0,img_rate)
@@ -174,6 +175,6 @@ def run_simulation(cell_type):
         pygame.display.update()
 
 
-# run_simulation("soma")
-run_simulation("dend_soma")
+run_simulation("soma")
+# run_simulation("dend_soma")
 # run_simulation("basic_neuron")
