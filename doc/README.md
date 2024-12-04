@@ -6,7 +6,12 @@ produced by the simulation. This interface provides a interactive learning tool 
 This project contains the following files:
 
 'main.py'
-- Contains the main code. Run this file to start loading the interface. 
+- Contains the main code. The main function 'run_simulation(cell_type)' will run the simulation for a neuron. There are two cell types you can choose: 
+'soma': simulate just a soma
+'dend_soma': simulate a dendrite and a soma 
+
+'neuron_class.py': defines the class 'SOMA' which simulate just a soma, and 'DEND_SOMA' which simulate a dentrite and a soma
+
 
 'setup.py;
 - The file that contains the setup information for using this package 
