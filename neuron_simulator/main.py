@@ -171,7 +171,7 @@ def run_simulation(cell_type):
         pygame.display.update()
 
 
-# run_simulation("soma")
-run_simulation("dend_soma")
+run_simulation("soma")
+# run_simulation("dend_soma")
 # run_simulation("basic_neuron")
 

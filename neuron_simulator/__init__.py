@@ -1,2 +1,2 @@
 from .main import neuron_class
-from neuron_simulator import run_simulation
+from .main  import neuron_simulator
