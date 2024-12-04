@@ -62,7 +62,6 @@ def run_simulation(cell_type):
     NEURON_RECT = NEURON_IMG.get_rect()
     NEURON_RECT.center = img_center
 
-
     
 
     draw = False
