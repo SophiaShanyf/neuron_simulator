@@ -375,12 +375,14 @@ class DEND_SOMA:
 
 
 
-def run_simulation(cell_type):
+def run_simulation(cell_type, theme_file = 'theme.json'):
     # This is the main function for running neuron simulation
     # Input: cell_type
     #       'soma' : simulate a single cell body (soma) 
     #       'basic_neuron' : simulate a neuron with a soma and a axon
-    #       '
+    #       theme file
+    #       a theme file that let pygame decide work and figure style. default is 'theme.json'
+    #       this file is accessible from 'https://github.com/SophiaShanyf/neuron_simulator/tree/main'
 
     pygame.init()
 
@@ -394,7 +396,7 @@ def run_simulation(cell_type):
         theme = json.load()'''
     
     # data_text = files('neuron_simulator').joinpath('theme.json').read_text()
-    MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT), 'theme.json')
+    MANAGER = pygame_gui.UIManager((WIDTH, HEIGHT), theme_file)
 
     # Upper text displace and text input section 
 

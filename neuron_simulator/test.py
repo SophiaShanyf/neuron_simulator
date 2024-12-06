@@ -26,7 +26,7 @@ tf.run_pygame()
 
 # test entire module 
 
-run_simulation('soma')
+run_simulation('soma', 'neuron_simulator/theme.json')
 
-run_simulation('dend_soma')
+run_simulation('dend_soma',  'neuron_simulator/theme.json')
 
