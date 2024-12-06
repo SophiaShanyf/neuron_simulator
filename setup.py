@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
    name='neuron_simulator',
-   version='2.1.3',
+   version='2.2',
    description='a visualization tool for neuron spiking graph',
    author='Sophia Shan',
    author_email='shanyufei2001@gmail.com',
