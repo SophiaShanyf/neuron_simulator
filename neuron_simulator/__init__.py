@@ -1,2 +1,5 @@
-from .main import neuron_class
-from .main  import neuron_simulator
+from .__main__  import * 
+import neuron 
+import pygame
+import pygame_gui
+import pygame_chart

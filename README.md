@@ -21,3 +21,4 @@ This project contains the following files:
 
 'theme.json'
 - file that controls the text themes in the interface
+- To get get the best experience, download theme.json to local directory from 'https://github.com/SophiaShanyf/neuron_simulator/tree/main'
