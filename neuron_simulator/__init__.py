@@ -1,4 +1,4 @@
-from .__main__  import * 
+from .main  import * 
 import neuron 
 import pygame
 import pygame_gui

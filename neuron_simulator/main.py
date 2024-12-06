@@ -4,11 +4,7 @@ from neuron.units import ms, mV, μm
 import pygame
 import pygame_gui
 import pygame_chart as pyc
-# from importlib.resources import files
-
-# neuron_simulator. 
-
-
+# Download theme.json to local directory before using the package
 
 # Code adapted from The neuron simulator documentation: https://nrn.readthedocs.io/en/latest/index.html
 class SOMA:
@@ -422,19 +418,6 @@ def run_simulation(cell_type):
         cell_x, cell_y = 250, 500
         [x, y, width, height] = 450, 370, 350, 250
         Ion_leaky_input, Ion_HH_input, error_m, Stim_part = neuron.setup_gui_page(MANAGER)
-    '''
-        
-    elif cell_type == "basic_neuron":
-        neuron = Nclass.NEURON()
-        neuron.make_a_neuron()
-        img_file = "neuron_img.jpg"
-        img_rate = 0.7
-    '''
-    '''
-    NEURON_IMG = pygame.image.load(img_file).convert()
-    NEURON_IMG = pygame.transform.rotozoom(NEURON_IMG, 0,img_rate)
-    NEURON_RECT = NEURON_IMG.get_rect()
-    NEURON_RECT.center = img_center'''
 
     
 
